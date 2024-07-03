@@ -2,24 +2,26 @@
 // This file SHOULD be checked into source version control.
 // This file is automatically updated during development when running `dev.ts`.
 
-import * as $_404 from "./routes/_404.tsx";
-import * as $_app from "./routes/_app.tsx";
-import * as $document_name_ from "./routes/document/[name].tsx";
-import * as $index from "./routes/index.tsx";
-import * as $Counter from "./islands/Counter.tsx";
-import { type Manifest } from "$fresh/server.ts";
+import * as $_404 from './routes/_404.tsx'
+import * as $_app from './routes/_app.tsx'
+import * as $document_name_ from './routes/document/[name].tsx'
+import * as $index from './routes/index.tsx'
+import * as $Counter from './islands/Counter.tsx'
+import * as $DocumentView from './islands/DocumentView.tsx'
+import { type Manifest } from '$fresh/server.ts'
 
 const manifest = {
   routes: {
-    "./routes/_404.tsx": $_404,
-    "./routes/_app.tsx": $_app,
-    "./routes/document/[name].tsx": $document_name_,
-    "./routes/index.tsx": $index,
+    './routes/_404.tsx': $_404,
+    './routes/_app.tsx': $_app,
+    './routes/document/[name].tsx': $document_name_,
+    './routes/index.tsx': $index,
   },
   islands: {
-    "./islands/Counter.tsx": $Counter,
+    './islands/Counter.tsx': $Counter,
+    './islands/DocumentView.tsx': $DocumentView,
   },
   baseUrl: import.meta.url,
-} satisfies Manifest;
+} satisfies Manifest
 
-export default manifest;
+export default manifest

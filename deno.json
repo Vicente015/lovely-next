@@ -22,18 +22,42 @@
   ],
   "imports": {
     "$fresh/": "https://deno.land/x/fresh@1.6.8/",
-    "preact": "https://esm.sh/preact@10.19.6",
-    "preact/": "https://esm.sh/preact@10.19.6/",
+    "$std/": "https://deno.land/std@0.216.0/",
+    "@earthstar/earthstar": "jsr:@earthstar/earthstar@^11.0.0-beta.4",
     "@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
     "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
+    "dexie": "npm:dexie@^4.0.7",
+    "dexie-react-hooks": "npm:dexie-react-hooks@^1.1.7",
+    "preact": "https://esm.sh/preact@10.22.0",
+    "preact/": "https://esm.sh/preact@10.22.0/",
     "tailwindcss": "npm:tailwindcss@3.4.1",
     "tailwindcss/": "npm:/tailwindcss@3.4.1/",
     "tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js",
-    "$std/": "https://deno.land/std@0.216.0/"
+    "jsr:/@earthstar/willow@^0.5.1/browser": "./vendor/jsr.io/@earthstar/willow/0.5.1/mod.browser.ts"
+  },
+  "scopes": {
+    "./jsr.io/": {
+      "jsr:@earthstar/willow@^0.5.1": "./vendor/jsr.io/@earthstar/willow/0.5.1/mod.universal.ts",
+      "jsr:@earthstar/meadowcap@^0.6.3": "./vendor/jsr.io/@earthstar/meadowcap/0.6.3/mod.ts",
+      "jsr:@std/bytes@^0.224.0": "./vendor/jsr.io/@std/bytes/0.224.0/mod.ts",
+      "jsr:@earthstar/willow-utils@^1.0.0": "./vendor/jsr.io/@earthstar/willow-utils/1.0.2/mod.ts",
+      "jsr:/@std/encoding@^0.224.1/base32": "./vendor/jsr.io/@std/encoding/0.224.3/base32.ts",
+      "jsr:@noble/ed25519@^2.1.0": "./vendor/jsr.io/@noble/ed25519/2.1.0/index.ts",
+      "jsr:@earthstar/willow-utils@^1.0.2": "./vendor/jsr.io/@earthstar/willow-utils/1.0.2/mod.ts",
+      "jsr:@korkje/fifo@^0.2.4": "./vendor/jsr.io/@korkje/fifo/0.2.4/mod.ts",
+      "jsr:@std/data-structures@^0.224.0": "./vendor/jsr.io/@std/data-structures/0.224.1/mod.ts",
+      "jsr:/@std/encoding@^0.224.1/base64": "./vendor/jsr.io/@std/encoding/0.224.3/base64.ts"
+    }
   },
   "compilerOptions": {
     "jsx": "react-jsx",
     "jsxImportSource": "preact"
   },
-  "nodeModulesDir": true
+  "nodeModulesDir": true,
+  "fmt": {
+    "semiColons": false,
+    "singleQuote": true,
+    "useTabs": false,
+    "indentWidth": 2
+  }
 }

@@ -17,5 +17,6 @@
   "css.customData": [
     ".vscode/tailwind.json"
   ],
-  "eslint.enable": false
+  "eslint.enable": false,
+  "deno.importMap": "./deno.json"
 }
