@@ -1,0 +1,37 @@
+{
+  "env": {
+    "es2024": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "preact",
+    "love",
+    "@unocss",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:security/recommended-legacy"
+  ],
+  "ignorePatterns": [
+    "build/",
+    "dist/"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": [
+    "@typescript-eslint",
+    "unicorn",
+    "simple-import-sort",
+    "unused-imports"
+  ],
+  "root": true,
+  "rules": {
+    "unused-imports/no-unused-imports": "error",
+    "@typescript-eslint/prefer-nullish-coalescing": "off",
+    "@typescript-eslint/explicit-function-return-type": "off"
+  }
+}
