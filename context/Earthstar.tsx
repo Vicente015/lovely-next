@@ -1,20 +1,17 @@
 import {
   IdentityKeypair,
-  Path,
   Peer,
   RuntimeDriverUniversal,
   ShareKeypair,
-  ShareTag,
   ValidationError,
 } from '@earthstar/earthstar'
 import { ComponentChildren, createContext } from 'preact'
 import { useContext, useEffect, useState } from 'preact/hooks'
 import { StorageDriverIndexedDB } from '@earthstar/earthstar/browser'
 import { IS_BROWSER } from '$fresh/runtime.ts'
-import { lazy, Suspense } from 'preact/compat'
-import { useSignal } from 'https://esm.sh/v135/@preact/signals@1.2.2/X-ZS8q/dist/signals.js'
+import { Suspense } from 'preact/compat'
+import { signal } from '@preact/signals'
 import { KeyringContext } from './Keyring.tsx'
-import { db } from '$std/media_types/_db.ts'
 import { SharesTable } from './Keyring.tsx'
 import { IdentitiesTable } from './Keyring.tsx'
 
@@ -34,7 +31,7 @@ export function EarthstarProvider(
     return null
   }
   const keyring = useContext(KeyringContext)
-  const peer = useSignal(
+  const peer = signal(
     new Peer({
       password: 'password',
       runtime: new RuntimeDriverUniversal(),
@@ -44,50 +41,60 @@ export function EarthstarProvider(
   const [identity, setIdentity] = useState<IdentitiesTable | null>(null)
   const [share, setShare] = useState<SharesTable | null>(null)
 
-  const createDefaultIdentity = async () => {
+  // todo: use tag as ids?? shortname by params
+  const createIdentity = async (name = 'default') => {
     const newIdentity = await peer.value.createIdentity('vice')
-    if (newIdentity instanceof ValidationError) return null
+    if (newIdentity instanceof ValidationError) {
+      throw new Error(newIdentity.message)
+    }
     const identity = {
-      name: 'default',
+      name,
       ...newIdentity,
     }
     await keyring?.identities.add(identity)
     return identity
   }
 
-  const createDefaultShare = async () => {
+  const createShare = async (name = 'default') => {
+    if (!identity) throw new Error('Identity needed')
     const newShare = await peer.value.createShare('main', false)
-    if (newShare instanceof ValidationError) return null
+    if (newShare instanceof ValidationError) throw new Error(newShare.message)
+
     const share = {
-      name: 'default',
+      name,
       ...newShare,
     }
     await keyring?.shares.add(share)
+    await peer.value.mintCap(share.tag, identity.tag, 'write')
     return share
   }
 
   useEffect(() => {
-    async function get() {
+    async function getIdentity() {
       setIdentity(
         await keyring?.identities.get('default') ??
-          await createDefaultIdentity(),
-      )
-
-      setShare(
-        await keyring?.shares.get('default') ?? await createDefaultShare(),
+          await createIdentity(),
       )
     }
-    get()
-  }, [keyring])
+    async function getShare() {
+      setShare(
+        await keyring?.shares.get('default') ?? await createShare(),
+      )
+    }
+    if (peer && !identity) getIdentity()
+    if (peer && identity && !share) getShare()
+  }, [keyring, identity])
 
   return (
     <Suspense fallback='loading...'>
       <EarthstarContext.Provider
-        value={{
-          identity: identity as IdentitiesTable,
-          peer: peer.value,
-          share: share as SharesTable,
-        }}
+        value={identity && peer && share
+          ? {
+            identity: identity as IdentitiesTable,
+            peer: peer.value,
+            share: share as SharesTable,
+          }
+          : null}
       >
         {props.children}
       </EarthstarContext.Provider>

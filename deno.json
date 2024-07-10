@@ -18,7 +18,8 @@
     }
   },
   "exclude": [
-    "**/_fresh/*"
+    "**/_fresh/*",
+    "vendor"
   ],
   "imports": {
     "$fresh/": "https://deno.land/x/fresh@1.6.8/",
@@ -26,14 +27,15 @@
     "@earthstar/earthstar": "jsr:@earthstar/earthstar@^11.0.0-beta.4",
     "@preact/signals": "https://esm.sh/*@preact/signals@1.2.2",
     "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.5.1",
+    "@tanstack/react-query": "npm:@tanstack/react-query@^5.50.1",
     "dexie": "npm:dexie@^4.0.7",
     "dexie-react-hooks": "npm:dexie-react-hooks@^1.1.7",
+    "jsr:/@earthstar/willow@^0.5.1/browser": "./vendor/jsr.io/@earthstar/willow/0.5.1/mod.browser.ts",
     "preact": "https://esm.sh/preact@10.22.0",
     "preact/": "https://esm.sh/preact@10.22.0/",
     "tailwindcss": "npm:tailwindcss@3.4.1",
     "tailwindcss/": "npm:/tailwindcss@3.4.1/",
-    "tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js",
-    "jsr:/@earthstar/willow@^0.5.1/browser": "./vendor/jsr.io/@earthstar/willow/0.5.1/mod.browser.ts"
+    "tailwindcss/plugin": "npm:/tailwindcss@3.4.1/plugin.js"
   },
   "scopes": {
     "./jsr.io/": {

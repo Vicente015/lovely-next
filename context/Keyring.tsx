@@ -28,9 +28,9 @@ db.version(1).stores({
 export const KeyringContext = createContext<DexieDatabase>(db)
 
 export const KeyringProvider = (
-  props: { children: ComponentChildren | FunctionComponent },
+  props: { children: ComponentChildren | FunctionComponent | Element },
 ) => {
-  if (!IS_BROWSER) return
+  if (!IS_BROWSER) return null
 
   return (
     <KeyringContext.Provider value={db}>
