@@ -3,25 +3,20 @@ import '@unocss/reset/normalize.css'
 import 'virtual:uno.css'
 
 import { LocationProvider, Router, Route, hydrate, prerender as ssr } from 'preact-iso'
-import { Home } from './pages/Home/index.js'
 import { NotFound } from './pages/_404.js'
-import { MenuIcon, PlusIcon, SearchIcon } from 'lucide-preact'
-import DocumentPreview from './components/DocumentPreview'
 import NavBar from './components/Navbar'
+import DocumentPage from './pages/doc/[name]'
+import { HomePage } from './pages/home'
 
-export function App() {
+export function App () {
   return (
     <LocationProvider>
-      <NavBar />
-      <main class="w-full mb-8 scroll-smooth max-w-[90ch] lg:max-w-[100ch] m-auto rounded-md min-h-screen bg-light-2">
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
-          {Array.from({ length: 12 }).map((_, index) => (
-            <DocumentPreview key={index}/>
-          ))}
-        </div>
+      <main class="m-auto max-w-[90ch] min-h-screen w-full scroll-smooth rounded-md bg-light-2 lg:max-w-[100ch]">
+        <NavBar />
         <Router>
-          <Route path="/" component={Home} />
+          <Route path="/" component={HomePage} />
           <Route default component={NotFound} />
+          <Route component={DocumentPage} path='/doc/*' />
         </Router>
       </main>
     </LocationProvider>
@@ -29,9 +24,11 @@ export function App() {
 }
 
 if (typeof window !== 'undefined') {
+  // @ts-expect-error Needs types
   hydrate(<App />, document.getElementById('app'))
 }
 
-export async function prerender(data) {
+// @ts-expect-error Needs types
+export async function prerender (data) {
   return await ssr(<App {...data} />)
 }

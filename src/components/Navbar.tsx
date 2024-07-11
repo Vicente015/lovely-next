@@ -1,7 +1,7 @@
-import { MenuIcon, PlusIcon, SearchIcon } from 'lucide-preact';
+import { MenuIcon, PlusIcon, SearchIcon } from 'lucide-preact'
 
 const NavBar = () => (
-  <header class="sticky top-0 left-0 bg-light-2 bg-opacity-30 backdrop-filter text-black backdrop-blur-md p-4 flex flex-row justify-between items-center">
+  <header class="sticky left-0 top-0 flex flex-row items-center justify-between bg-light-2 bg-opacity-30 py-1 text-black backdrop-blur-md backdrop-filter">
     <div class="flex gap-2">
       <PlusIcon />
       <SearchIcon />
@@ -11,6 +11,6 @@ const NavBar = () => (
       <MenuIcon />
     </div>
   </header>
-);
+)
 
-export default NavBar;
+export default NavBar
