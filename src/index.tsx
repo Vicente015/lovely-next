@@ -6,29 +6,19 @@ import { LocationProvider, Router, Route, hydrate, prerender as ssr } from 'prea
 import { Home } from './pages/Home/index.js'
 import { NotFound } from './pages/_404.js'
 import { MenuIcon, PlusIcon, SearchIcon } from 'lucide-preact'
+import DocumentPreview from './components/DocumentPreview'
+import NavBar from './components/Navbar'
 
-const NavBar = () => (
-  <header
-    class='sticky left-0 top-0 flex flex-row items-center justify-between bg-light-2 bg-opacity-30 p-4 backdrop-blur-md backdrop-filter'
-  >
-    <div class='flex gap-2'>
-      <PlusIcon />
-      <SearchIcon />
-    </div>
-    <h1 class='text-xl font-bold'>
-      Lovely
-    </h1>
-    <div>
-      <MenuIcon />
-    </div>
-  </header>
-)
-
-export function App () {
+export function App() {
   return (
     <LocationProvider>
       <NavBar />
-      <main class='m-auto mb-8 max-w-[90ch] min-h-screen w-full scroll-smooth rounded-md bg-light-2 font-systemui lg:max-w-[100ch]'>
+      <main class="w-full mb-8 scroll-smooth max-w-[90ch] lg:max-w-[100ch] m-auto rounded-md min-h-screen bg-light-2">
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-4">
+          {Array.from({ length: 12 }).map((_, index) => (
+            <DocumentPreview key={index}/>
+          ))}
+        </div>
         <Router>
           <Route path="/" component={Home} />
           <Route default component={NotFound} />
@@ -42,6 +32,6 @@ if (typeof window !== 'undefined') {
   hydrate(<App />, document.getElementById('app'))
 }
 
-export async function prerender (data) {
+export async function prerender(data) {
   return await ssr(<App {...data} />)
 }
