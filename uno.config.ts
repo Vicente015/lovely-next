@@ -40,7 +40,8 @@ export default defineConfig({
         3: '#3d3846',
         4: '#241f31',
         5: '#000000'
-      }
+      },
+      accent: '#1c71d8'
     }
   }
 })

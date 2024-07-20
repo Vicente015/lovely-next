@@ -3,9 +3,9 @@
     "es2024": true
   },
   "extends": [
+    "love",
     "eslint:recommended",
     "preact",
-    "love",
     "@unocss",
     "plugin:@tanstack/eslint-plugin-query/recommended",
     "plugin:@typescript-eslint/recommended",
@@ -27,12 +27,35 @@
     "@typescript-eslint",
     "unicorn",
     "simple-import-sort",
-    "unused-imports"
+    "unused-imports",
+    "react"
   ],
   "root": true,
   "rules": {
+    "react/jsx-curly-brace-presence": [
+      "error",
+      {
+        "props": "never",
+        "children": "never",
+        "propElementValues": "always"
+      }
+    ],
     "unused-imports/no-unused-imports": "error",
     "@typescript-eslint/prefer-nullish-coalescing": "off",
-    "@typescript-eslint/explicit-function-return-type": "off"
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/strict-boolean-expressions": "off",
+    "jsx-quotes": [
+      "error",
+      "prefer-single"
+    ],
+    "indent": [
+      "error",
+      2
+    ],
+    "object-curly-spacing": [
+      "error",
+      "always"
+    ],
+    "@typescript-eslint/object-curly-spacing": "error"
   }
 }

@@ -16,7 +16,6 @@
 
 body {
   margin: 0;
-  background-color: #f6f5f4;
 }
 
 /* He usado estas reglas provisionalmente */
@@ -28,4 +27,8 @@ a {
 
 a:hover {
   text-decoration: none;
+}
+
+body:has(dialog[open]) {
+  filter: blur(5);
 }
