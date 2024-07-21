@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@discordjs/collection':
+        specifier: ^2.1.0
+        version: 2.1.0
       '@earthstar/earthstar':
         specifier: npm:@jsr/earthstar__earthstar@11.0.0-beta.4
         version: '@jsr/earthstar__earthstar@11.0.0-beta.4'
@@ -337,6 +340,10 @@ packages:
 
   '@bcoe/v8-coverage@0.2.3':
     resolution: {integrity: sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==}
+
+  '@discordjs/collection@2.1.0':
+    resolution: {integrity: sha512-mLcTACtXUuVgutoznkh6hS3UFqYirDYAg5Dc1m8xn6OvPjetnUlf/xjtqnnc47OwWdaoCQnHmHh9KofhD6uRqw==}
+    engines: {node: '>=18'}
 
   '@esbuild/aix-ppc64@0.21.5':
     resolution: {integrity: sha512-1SDgH6ZSPTlggy1yI6+Dbkiz8xzpHJEVAlF/AM1tHPLsf5STom9rwtjE4hKAF20FfXXNTFqEYXyJNWh1GiZedQ==}
@@ -3443,6 +3450,8 @@ snapshots:
       to-fast-properties: 2.0.0
 
   '@bcoe/v8-coverage@0.2.3': {}
+
+  '@discordjs/collection@2.1.0': {}
 
   '@esbuild/aix-ppc64@0.21.5':
     optional: true

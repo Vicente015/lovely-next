@@ -17,7 +17,8 @@ const systemFonts = {
   slabserif: 'Rockwell, Rockwell Nova, Roboto Slab, DejaVu Serif, Sitka Small, serif',
   antique: 'Superclarendon, Bookman Old Style, URW Bookman, URW Bookman L, Georgia Pro, Georgia, serif',
   didone: 'Didot, Bodoni MT, Noto Serif Display, URW Palladio L, P052, Sylfaen, serif',
-  handwritten: 'Segoe Print, Bradley Hand, Chilanka, TSCu_Comic, casual, cursive'
+  handwritten: 'Segoe Print, Bradley Hand, Chilanka, TSCu_Comic, casual, cursive',
+  ptserif: 'PT Serif'
 }
 
 export default defineConfig({

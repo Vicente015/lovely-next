@@ -12,15 +12,24 @@ type SharesTable = ShareKeypair & {
   name: string
 }
 
+interface PeerTable {
+  id: string
+  password: string
+}
+
 type DexieDatabase = Dexie & {
   identities: EntityTable<IdentitiesTable, 'name'>
   shares: EntityTable<SharesTable, 'name'>
+  peer: EntityTable<PeerTable, 'id'>
 }
 
 const db = new Dexie(DB_NAME) as DexieDatabase
+// todo: change index to auto incremental?
+// so we can get the first by .get(1)
 db.version(1).stores({
   identities: '++name',
-  shares: '++name'
+  shares: '++name',
+  peer: '++id,&password'
 })
 
 export const KeyringContext = createContext<DexieDatabase>(db)
@@ -35,4 +44,4 @@ export const KeyringProvider = (
   )
 }
 
-export type { DexieDatabase, IdentitiesTable, SharesTable }
+export type { DexieDatabase, IdentitiesTable, SharesTable, PeerTable }

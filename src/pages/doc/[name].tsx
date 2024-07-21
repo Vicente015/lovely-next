@@ -1,45 +1,86 @@
-import { useState } from 'preact/hooks'
+import { type ComponentChildren } from 'preact'
 import Toolbar from '../../components/ToolBar'
+import { useContext } from 'preact/hooks'
+import { StoreContext } from '../../contexts/Store'
+import { type Document, type Path } from '@earthstar/earthstar'
+import { useComputed, useSignal, useSignalEffect } from '@preact/signals'
+import { ChevronLeftIcon, EllipsisVerticalIcon, MenuIcon, PanelLeftDashedIcon } from 'lucide-preact'
 
-// + Para evitar la duplicidad de clases ...
-const TextSection = ({ children }) => (
-  <p class="line-clamp-8 mb-4 text-balance text-2xl text-neutral-600 leading-tight">
+const decoder = new TextDecoder()
+
+const NavBar = ({ title }: { title: string }) => {
+  return (
+    <nav class='sticky left-0 top-0 flex flex-row items-center justify-between bg-light-2 bg-opacity-30 py-1 text-black backdrop-blur-md backdrop-filter'>
+      <div class='flex gap-2'>
+        <ChevronLeftIcon />
+        <PanelLeftDashedIcon />
+      </div>
+      <span>{title}</span>
+      <div class='flex flex-row items-center gap-2'>
+        <EllipsisVerticalIcon />
+        <MenuIcon />
+      </div>
+    </nav>
+  )
+}
+
+const TextSection = ({ children }: { children: ComponentChildren }) => (
+  <p class='mb-4 text-2xl text-neutral-600 leading-tight'>
     {children}
   </p>
 )
 
-// - Provisional
-const DocumentContent = ({ title, paragraphs }) => (
-  <div class="mx-auto max-w-2xl p-6">
-    <h1 class="line-clamp-2 mb-4 text-pretty text-3xl text-neutral-950 font-extrabold">
-      {title}
-    </h1>
-    {paragraphs.map((paragraph, index) => (
-      <TextSection key={index}>{paragraph}</TextSection>
-    ))}
-  </div>
-)
+function DocumentView ({ document }: { document: Document }) {
+  const content = useSignal([''])
 
-export default function DocumentPage () {
-  //! Lo dejo en true por defecto para poder debuggear bien
-  const [showToolbar, setShowToolbar] = useState(true)
+  useSignalEffect(() => {
+    async function fetch () {
+      if (!document?.payload) return
+      content.value = decoder.decode(await document.payload.bytes()).split('\n')
+    }
+    void fetch()
+  })
 
-  // ? No recuerdo la logica que querias, no se si al hacer clic en un boton de la NavBar o con menu contextual.
-  const toggleToolbar = () => {
-    setShowToolbar(!showToolbar)
-  }
-
-  const title = 'Lorem Ipsum'
-  const paragraphs = [
-    'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore disputandum putant. Sed ut iis bonis erigimur, quae expectamus, sic laetamur iis, quae et terroribus cupiditatibusque detractis et omnium falsarum opinionum temeritate derepta certissimam se nobis ducem praebeat ad voluptatem. Sapientia enim est a Chrysippo praetermissum in.',
-    'Omnes, fatendum est summum esse bonum iucunde vivere. Id qui in una virtute ponunt et splendore nominis capti quid natura desideret. Tum vero, si stabilem scientiam rerum tenebimus, servata illa, quae quasi titillaret sensus, ut ita dicam, et ad corpus nihil referatur.',
-    'Ibidem homo acutus, cum illud ocurreret, si omnia deorsus et regione ferrentur et, ut dixi, ad lineam, numquam fore ut aliqua remaneret eadem vis in corpora. Quae quidem sapientes sequuntur duce natura tamquam videntes; alterum autem hoc posterius neglegentur.'
-  ]
+  const title = useComputed(() => content.value.find(p => p.startsWith('# ')))
+  const paragraphs = useComputed(() => {
+    content.value.shift()
+    return content.value
+  })
 
   return (
-    <div class="p-4 text-black">
-      <DocumentContent title={title} paragraphs={paragraphs} />
-      {showToolbar && <Toolbar />}
+    <>
+      <NavBar title={title.value ?? 'Untitled'} />
+      <div class='mx-auto max-w-2xl p-6'>
+        <h1 class='line-clamp-2 mb-4 text-pretty text-3xl text-neutral-950 font-bold font-antique' autoFocus contentEditable>
+          {title}
+        </h1>
+        <div className='text-balance font-transitional' contentEditable>
+          {paragraphs.value.map((paragraph, index) => (
+            <TextSection key={index}>
+              {paragraph}
+            </TextSection>
+          ))}
+        </div>
+      </div>
+      <Toolbar />
+    </>
+  )
+}
+
+export default function DocumentPage ({ id }: { id: Path }) {
+  const store = useContext(StoreContext)
+
+  const document = store?.documents.value.get(id)
+
+  const NotFound = () => (
+    <div>
+      No existe este documento!
     </div>
+  )
+
+  return (
+    document
+      ? <DocumentView document={document} />
+      : <NotFound />
   )
 }
