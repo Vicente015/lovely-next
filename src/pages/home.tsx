@@ -4,7 +4,7 @@ import { StoreContext } from '../contexts/Store'
 import DocumentPreview from '../components/DocumentPreview'
 import { MenuIcon, PlusIcon, SearchIcon } from 'lucide-preact'
 import { Avatar } from '../components/Avatar'
-import EarthstarContext from '../contexts/Earthstar/Context'
+import { EarthstarContext } from '../contexts/Earthstar'
 import { Path } from '@earthstar/earthstar'
 import { AskModal } from '../components/AskModal'
 

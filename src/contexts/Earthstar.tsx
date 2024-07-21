@@ -1,12 +1,26 @@
-import { type ComponentChildren } from 'preact'
-import EarthstarContext from './Context'
-import { useSignal, useSignalEffect } from '@preact/signals'
-import { KeyringContext, type IdentitiesTable, type SharesTable } from '../Keyring'
+import {
+  type SharesTable,
+  type IdentitiesTable
+  , KeyringContext
+} from './Keyring'
+import { type Signal, useSignal, useSignalEffect } from '@preact/signals'
 import { isErr, Peer, RuntimeDriverUniversal, ValidationError } from '@earthstar/earthstar'
 import { StorageDriverIndexedDB } from '@earthstar/earthstar/browser'
 import { useContext } from 'preact/hooks'
+import { type ComponentChildren, createContext } from 'preact'
 
-export default function EarthstarProvider (
+export interface EarthstarState {
+  identity: Signal<IdentitiesTable | null>
+  share: Signal<SharesTable | null>
+  peer: Signal<Peer | null>
+  createIdentity: (shortname: string) => Promise<IdentitiesTable>
+  createShare: (shortname: string) => Promise<SharesTable>
+  createPeer: (password: string, existing?: boolean) => Promise<Peer>
+}
+
+export const EarthstarContext = createContext<EarthstarState | null>(null)
+
+export function EarthstarProvider (
   props: { children: ComponentChildren }
 ) {
   const keyring = useContext(KeyringContext)

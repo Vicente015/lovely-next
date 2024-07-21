@@ -3,14 +3,11 @@ import '@unocss/reset/normalize.css'
 import 'virtual:uno.css'
 
 import { LocationProvider, Router, Route, hydrate, prerender as ssr } from 'preact-iso'
-import { lazy, Suspense } from 'preact/compat'
 import { NotFound } from './pages/_404.js'
 import DocumentPage from './pages/doc/[name]'
 import { HomePage } from './pages/home'
 import StoreProvider from './contexts/Store'
-
-// eslint-disable-next-line @typescript-eslint/promise-function-async
-const EarthstarProvider = lazy(() => import('./contexts/Earthstar/Provider'))
+import { EarthstarProvider } from './contexts/Earthstar'
 
 function AppContent () {
   return (
@@ -26,15 +23,13 @@ export function App () {
   return (
     <LocationProvider>
       <div className='bg-light-2'>
-        <Suspense fallback='Loading...'>
-          <EarthstarProvider>
-            <StoreProvider>
-              <div class='m-auto h-full max-w-[90ch] min-h-screen w-full scroll-smooth rounded-md'>
-                <AppContent />
-              </div>
-            </StoreProvider>
-          </EarthstarProvider>
-        </Suspense>
+        <EarthstarProvider>
+          <StoreProvider>
+            <div class='m-auto h-full max-w-[90ch] min-h-screen w-full scroll-smooth rounded-md'>
+              <AppContent />
+            </div>
+          </StoreProvider>
+        </EarthstarProvider>
       </div>
     </LocationProvider>
   )

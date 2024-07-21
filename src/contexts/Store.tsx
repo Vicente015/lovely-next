@@ -1,8 +1,8 @@
-import { type Document, ValidationError, type Store, type Path } from '@earthstar/earthstar'
+import { type Document, type Store, type Path, isErr } from '@earthstar/earthstar'
 import { type Signal, useSignal, useSignalEffect } from '@preact/signals'
 import { type ComponentChildren, createContext } from 'preact'
 import { useContext } from 'preact/hooks'
-import EarthstarContext from './Earthstar/Context'
+import { EarthstarContext } from '../contexts/Earthstar'
 import { Collection } from '@discordjs/collection'
 
 interface StoreState {
@@ -25,7 +25,7 @@ export default function StoreProvider (
       if (!earthstar || !earthstar.share.value) return
       const newStore = await earthstar.peer.value?.getStore(earthstar.share.value.tag)
       if (newStore === undefined) throw new Error('store is undefined')
-      if (newStore instanceof ValidationError) throw newStore
+      if (isErr(newStore)) throw newStore
       console.debug('loaded store', newStore)
       store.value = newStore
 

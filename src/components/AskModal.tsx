@@ -1,5 +1,5 @@
 import { useContext, useState } from 'preact/hooks'
-import EarthstarContext from '../contexts/Earthstar/Context'
+import { EarthstarContext } from '../contexts/Earthstar'
 import { type JSX } from 'preact/jsx-runtime'
 import { XIcon } from 'lucide-preact'
 
