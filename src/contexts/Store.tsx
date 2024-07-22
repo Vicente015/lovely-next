@@ -1,13 +1,13 @@
-import { type Document, type Store, type Path, isErr } from '@earthstar/earthstar'
+import { type Document, Path, type Store, isErr } from '@earthstar/earthstar'
 import { type Signal, useSignal, useSignalEffect } from '@preact/signals'
 import { type ComponentChildren, createContext } from 'preact'
 import { useContext } from 'preact/hooks'
 import { EarthstarContext } from '../contexts/Earthstar'
-import { Collection } from '@discordjs/collection'
 
 interface StoreState {
   store: Signal<Store | null>
-  documents: Signal<Collection<Path, Document>>
+  documents: Signal<Record<string, Document>>
+  createDocument: ({ path, content }: { path: string, content: string }) => Promise<boolean>
 }
 
 export const StoreContext = createContext<StoreState | null>(null)
@@ -17,29 +17,60 @@ export default function StoreProvider (
 ) {
   const earthstar = useContext(EarthstarContext)
   const store = useSignal<Store | null>(null)
-  const documents = useSignal<Collection<Path, Document>>(new Collection())
+  const documents = useSignal<Record<string, Document>>({})
+  // const documents = useSignal<Collection<string, Document>>(new Collection())
+  const encoder = new TextEncoder()
+
+  async function loadDocuments () {
+    if (!store.value) return
+    const documentsArray = await Array.fromAsync(store.value.documents())
+    for (const document of documentsArray) {
+      console.debug('document', document)
+      documents.value = {
+        ...documents.value,
+        [document.path.format('base32')]: document
+      }
+    }
+    console.debug('loaded documents', documentsArray)
+  }
+
+  async function createDocument ({ path, content }: { path: string, content: string }) {
+    if (!store.value) throw new Error('Store needed')
+    if (!earthstar?.identity.value) throw new Error('Identity needed')
+    const identityTag = earthstar?.identity.value.tag
+    const result = await store.value.set({
+      identity: identityTag,
+      path: Path.fromStrings(path),
+      payload: encoder.encode(content)
+    })
+    if (result.kind === 'success') {
+      void loadDocuments()
+      return true
+    }
+    return false
+  }
 
   useSignalEffect(() => {
-    console.debug('create store called')
     async function getDefaultStore () {
-      if (!earthstar || !earthstar.share.value) return
-      const newStore = await earthstar.peer.value?.getStore(earthstar.share.value.tag)
+      if (!earthstar || !earthstar.share.value || store.value) return
+      const shareTag = earthstar.share.value.tag
+      const newStore = await earthstar.peer.value?.getStore(shareTag)
       if (newStore === undefined) throw new Error('store is undefined')
       if (isErr(newStore)) throw newStore
-      console.debug('loaded store', newStore)
       store.value = newStore
 
-      const documentsArray = await Array.fromAsync(store.value.documents())
-      for (const document of documentsArray) {
-        documents.value.set(document.path, document)
-      }
+      console.debug('loaded store', newStore, 'for tag', shareTag)
     }
     void getDefaultStore()
   })
 
+  useSignalEffect(() => {
+    void loadDocuments()
+  })
+
   return (
     <StoreContext.Provider
-      value={{ store, documents }}
+      value={{ store, documents, createDocument }}
     >
       {props.children}
     </StoreContext.Provider>

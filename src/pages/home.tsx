@@ -5,10 +5,7 @@ import DocumentPreview from '../components/DocumentPreview'
 import { MenuIcon, PlusIcon, SearchIcon } from 'lucide-preact'
 import { Avatar } from '../components/Avatar'
 import { EarthstarContext } from '../contexts/Earthstar'
-import { Path } from '@earthstar/earthstar'
 import { AskModal } from '../components/AskModal'
-
-const encoder = new TextEncoder()
 
 // todo: navbar component composable
 const NavBar = () => {
@@ -16,14 +13,11 @@ const NavBar = () => {
   const store = useContext(StoreContext)
 
   const handleCreate = async () => {
-    console.debug(store?.store.value)
     if (!store || !earthstar || !earthstar.identity.value || !store.store.value) throw new Error('no no')
-    const created = await store?.store.value?.set({
-      identity: earthstar?.identity.value.tag,
-      path: Path.fromStrings('example'),
-      payload: encoder.encode('# title\ndescription')
+    await store.createDocument({
+      path: 'frog',
+      content: '# title\ndescription...'
     })
-    console.debug('created', created, store.store.value, earthstar.identity.value)
   }
 
   console.debug('document', store?.documents.value)
@@ -55,12 +49,12 @@ export function HomePage () {
   return (
     <>
       <NavBar />
-      {store?.documents.value && store?.documents.value.size > 0
+      {store?.documents.value && Object.entries(store.documents.value).length > 0
         ? <main
           className='grid grid-cols-1 m-auto mb-12 mt-4 max-w-[75ch] gap-6 px-8 transition-all md:grid-cols-4 sm:grid-cols-2 lg:max-w-[85ch] md:p-0 sm:px-6'
         >
-          {store.documents.value.map((document, index) => (
-            <DocumentPreview key={index} document={document} />
+          {Object.entries(store.documents.value).map(([, value], index) => (
+            <DocumentPreview key={index} document={value} />
           ))}
         </main>
         : <div className='grid h-xl place-items-center'>

@@ -2,7 +2,7 @@ import { type ComponentChildren } from 'preact'
 import Toolbar from '../../components/ToolBar'
 import { useContext } from 'preact/hooks'
 import { StoreContext } from '../../contexts/Store'
-import { type Document, type Path } from '@earthstar/earthstar'
+import { type Document } from '@earthstar/earthstar'
 import { useComputed, useSignal, useSignalEffect } from '@preact/signals'
 import { ChevronLeftIcon, EllipsisVerticalIcon, MenuIcon, PanelLeftDashedIcon } from 'lucide-preact'
 
@@ -12,7 +12,7 @@ const NavBar = ({ title }: { title: string }) => {
   return (
     <nav class='sticky left-0 top-0 flex flex-row items-center justify-between bg-light-2 bg-opacity-30 py-1 text-black backdrop-blur-md backdrop-filter'>
       <div class='flex gap-2'>
-        <ChevronLeftIcon />
+        <ChevronLeftIcon className='cursor-pointer' />
         <PanelLeftDashedIcon />
       </div>
       <span>{title}</span>
@@ -67,10 +67,11 @@ function DocumentView ({ document }: { document: Document }) {
   )
 }
 
-export default function DocumentPage ({ id }: { id: Path }) {
+export default function DocumentPage ({ id }: { id: string }) {
   const store = useContext(StoreContext)
+  if (!store) throw new Error('no store')
 
-  const document = store?.documents.value.get(id)
+  const document = store.documents.value[id]
 
   const NotFound = () => (
     <div>
