@@ -1,4 +1,4 @@
-import { useContext } from 'preact/hooks'
+import { useContext, useMemo } from 'preact/hooks'
 import WelcomeMessage from '../components/WelcomeMessage'
 import { StoreContext } from '../contexts/Store'
 import DocumentPreview from '../components/DocumentPreview'
@@ -46,20 +46,26 @@ export function HomePage () {
   const earthstar = useContext(EarthstarContext)
   const store = useContext(StoreContext)
 
+  const documents = useMemo(() => {
+    const storeValue = store?.documents.value
+    return storeValue ? Object.entries(store.documents.value) : []
+  }, [store?.documents.value])
+
   return (
     <>
       <NavBar />
-      {store?.documents.value && Object.entries(store.documents.value).length > 0
-        ? <main
-          className='grid grid-cols-1 m-auto mb-12 mt-4 max-w-[75ch] gap-6 px-8 transition-all md:grid-cols-4 sm:grid-cols-2 lg:max-w-[85ch] md:p-0 sm:px-6'
-        >
-          {Object.entries(store.documents.value).map(([, value], index) => (
-            <DocumentPreview key={index} document={value} />
-          ))}
-        </main>
-        : <div className='grid h-xl place-items-center'>
-          <WelcomeMessage />
-        </div>
+      {
+        documents.length > 0
+          ? <main
+            className='grid grid-cols-1 m-auto mb-12 mt-4 max-w-[75ch] gap-6 px-8 transition-all md:grid-cols-4 sm:grid-cols-2 lg:max-w-[85ch] md:p-0 sm:px-6'
+          >
+            {documents.map(([, value], index) => (
+              <DocumentPreview key={index} document={value} />
+            ))}
+          </main>
+          : <div className='grid h-xl place-items-center'>
+            <WelcomeMessage />
+          </div>
       }
       {!earthstar?.identity.value && (
         <AskModal type='identity' />
