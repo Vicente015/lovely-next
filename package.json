@@ -6,7 +6,8 @@
     "dev": "vite",
     "fix": "nr lint --fix",
     "lint": "eslint . --format=pretty",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "serve": "vite serve"
   },
   "dependencies": {
     "@discordjs/collection": "^2.1.0",
@@ -16,6 +17,7 @@
     "@unocss/reset": "^0.61.3",
     "dexie": "^4.0.8",
     "lucide-preact": "^0.407.0",
+    "mnemonic-id": "^3.2.7",
     "preact": "^10.20.0",
     "preact-iso": "^2.6.3",
     "preact-render-to-string": "^6.5.5",

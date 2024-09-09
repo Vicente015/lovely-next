@@ -2,6 +2,7 @@ import { useContext, useState } from 'preact/hooks'
 import { EarthstarContext } from '../contexts/Earthstar'
 import { type JSX } from 'preact/jsx-runtime'
 import { XIcon } from 'lucide-preact'
+import { createNameId } from 'mnemonic-id'
 
 type ModalType = 'identity' | 'share'
 
@@ -16,7 +17,7 @@ export function AskModal ({ type }: { type: ModalType }) {
     console.debug('handleSubmit', data)
     await earthstar?.createPeer(data.get('password') as string)
     await earthstar?.createIdentity(data.get('name') as string)
-    await earthstar?.createShare('default')
+    await earthstar?.createShare(createNameId({ delimiter: '' }))
   }
 
   const IdentityForm = () => (

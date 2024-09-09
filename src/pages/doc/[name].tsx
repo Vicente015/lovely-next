@@ -71,6 +71,7 @@ export default function DocumentPage ({ id }: { id: string }) {
   const store = useContext(StoreContext)
   if (!store) throw new Error('no store')
 
+  // todo: get document from human path
   const document = store.documents.value[id]
 
   const NotFound = () => (

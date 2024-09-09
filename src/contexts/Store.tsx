@@ -21,11 +21,33 @@ export default function StoreProvider (
   // const documents = useSignal<Collection<string, Document>>(new Collection())
   const encoder = new TextEncoder()
 
+  useSignalEffect(() => {
+    const listener = store?.value?.willow
+    if (!listener) return
+    console.debug('listeners set')
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const debug = (args: any) => { console.debug('eventListener', args) }
+
+    listener.addEventListener('entrypayloadset', debug)
+    listener.addEventListener('entryingest', debug)
+    listener.addEventListener('payloadingest', debug)
+    listener.addEventListener('entryremove', debug)
+    listener.addEventListener('payloadremove', debug)
+
+    return () => {
+      listener.removeEventListener('entrypayloadset', debug)
+      listener.removeEventListener('entryingest', debug)
+      listener.removeEventListener('payloadingest', debug)
+      listener.removeEventListener('entryremove', debug)
+      listener.removeEventListener('payloadremove', debug)
+    }
+  })
+
   async function loadDocuments () {
     if (!store.value) return
     const documentsArray = await Array.fromAsync(store.value.documents())
     for (const document of documentsArray) {
-      console.debug('document', document)
+      console.debug('loadDocuments document', document)
       documents.value = {
         ...documents.value,
         [document.path.format('base32')]: document

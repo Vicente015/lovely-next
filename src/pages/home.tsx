@@ -6,6 +6,7 @@ import { MenuIcon, PlusIcon, SearchIcon } from 'lucide-preact'
 import { Avatar } from '../components/Avatar'
 import { EarthstarContext } from '../contexts/Earthstar'
 import { AskModal } from '../components/AskModal'
+import { createNameId } from 'mnemonic-id'
 
 // todo: navbar component composable
 const NavBar = () => {
@@ -14,13 +15,13 @@ const NavBar = () => {
 
   const handleCreate = async () => {
     if (!store || !earthstar || !earthstar.identity.value || !store.store.value) throw new Error('no no')
+    const generatedPath = createNameId()
+    console.debug('new path', generatedPath)
     await store.createDocument({
-      path: 'frog',
+      path: generatedPath,
       content: '# title\ndescription...'
     })
   }
-
-  console.debug('document', store?.documents.value)
 
   return (
     <nav class='sticky left-0 top-0 flex flex-row items-center justify-between bg-light-2 bg-opacity-30 py-1 text-black backdrop-blur-md backdrop-filter'>
@@ -46,6 +47,7 @@ export function HomePage () {
   const earthstar = useContext(EarthstarContext)
   const store = useContext(StoreContext)
 
+  console.debug('document in home', store?.documents.value)
   const documents = useMemo(() => {
     const storeValue = store?.documents.value
     return storeValue ? Object.entries(store.documents.value) : []

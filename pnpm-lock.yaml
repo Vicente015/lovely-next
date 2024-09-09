@@ -29,6 +29,9 @@ importers:
       lucide-preact:
         specifier: ^0.407.0
         version: 0.407.0(preact@10.22.1)
+      mnemonic-id:
+        specifier: ^3.2.7
+        version: 3.2.7
       preact:
         specifier: ^10.20.0
         version: 10.22.1
@@ -2432,6 +2435,9 @@ packages:
 
   mlly@1.7.1:
     resolution: {integrity: sha512-rrVRZRELyQzrIUAVMHxP97kv+G786pHmOKzuFII8zDYahFBS7qnHh2AlYSl1GAHhaMPCz6/oHjVMcfFYgFYHgA==}
+
+  mnemonic-id@3.2.7:
+    resolution: {integrity: sha512-kysx9gAGbvrzuFYxKkcRjnsg/NK61ovJOV4F1cHTRl9T5leg+bo6WI0pWIvOFh1Z/yDL0cjA5R3EEGPPLDv/XA==}
 
   mrmime@2.0.0:
     resolution: {integrity: sha512-eu38+hdgojoyq63s+yTpN4XMBdt5l8HhMhc4VKLO9KM5caLIBvUm4thi7fFaxyTmCKeNnXZ5pAlBwCUnhA09uw==}
@@ -6104,6 +6110,8 @@ snapshots:
       pathe: 1.1.2
       pkg-types: 1.1.3
       ufo: 1.5.3
+
+  mnemonic-id@3.2.7: {}
 
   mrmime@2.0.0: {}
 
