@@ -10,15 +10,15 @@ const decoder = new TextDecoder()
 
 const NavBar = ({ title }: { title: string }) => {
   return (
-    <nav class='sticky left-0 top-0 flex flex-row items-center justify-between bg-light-2 bg-opacity-30 py-1 text-black backdrop-blur-md backdrop-filter'>
-      <div class='flex gap-2'>
-        <ChevronLeftIcon className='cursor-pointer' />
-        <PanelLeftDashedIcon />
+    <nav class='sticky left-0 top-0 z-10 flex flex-row items-center justify-between bg-light-2 bg-opacity-30 px-4 py-2 text-black backdrop-blur-md backdrop-filter'>
+      <div class='flex items-center gap-4'>
+        <ChevronLeftIcon className='h-6 w-6 cursor-pointer' />
+        <PanelLeftDashedIcon className='h-6 w-6' />
       </div>
-      <span>{title}</span>
-      <div class='flex flex-row items-center gap-2'>
-        <EllipsisVerticalIcon />
-        <MenuIcon />
+      <span class='max-w-[60%] truncate text-lg font-semibold'>{title}</span>
+      <div class='flex flex-row items-center gap-4'>
+        <EllipsisVerticalIcon className='h-6 w-6 cursor-pointer' />
+        <MenuIcon className='h-6 w-6 cursor-pointer' />
       </div>
     </nav>
   )
