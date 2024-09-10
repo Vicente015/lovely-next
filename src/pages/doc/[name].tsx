@@ -5,17 +5,26 @@ import { StoreContext } from '../../contexts/Store'
 import { type Document } from '@earthstar/earthstar'
 import { useComputed, useSignal, useSignalEffect } from '@preact/signals'
 import { ChevronLeftIcon, EllipsisVerticalIcon, MenuIcon, PanelLeftDashedIcon } from 'lucide-preact'
+import { useLocation } from 'preact-iso'
+import capitalizeFirstLetter from '../../utils/capitalizeFirstLetter'
 
 const decoder = new TextDecoder()
 
+// todo: separate navbar component
 const NavBar = ({ title }: { title: string }) => {
+  const router = useLocation()
+
+  const handleBack = () => { router.route('../') }
+
   return (
-    <nav class='sticky left-0 top-0 z-10 flex flex-row items-center justify-between bg-light-2 bg-opacity-30 px-4 py-2 text-black backdrop-blur-md backdrop-filter'>
-      <div class='flex items-center gap-4'>
-        <ChevronLeftIcon className='h-6 w-6 cursor-pointer' />
+    <nav class='sticky left-0 top-0 h-[3rem] flex flex-row items-center justify-between bg-light-2 bg-opacity-30 px-7 py-2 text-black backdrop-blur-md backdrop-filter'>
+      <div class='flex items-center gap-2'>
+        <button type='button' className='m-0 h-6 w-6 cursor-pointer border-none bg-transparent p-0 text-black' onClick={handleBack}>
+          <ChevronLeftIcon className='h-auto w-auto' />
+        </button>
         <PanelLeftDashedIcon className='h-6 w-6' />
       </div>
-      <span class='max-w-[60%] truncate text-lg font-semibold'>{title}</span>
+      <span class='text-lg font-bold'>{title}</span>
       <div class='flex flex-row items-center gap-4'>
         <EllipsisVerticalIcon className='h-6 w-6 cursor-pointer' />
         <MenuIcon className='h-6 w-6 cursor-pointer' />
@@ -41,7 +50,12 @@ function DocumentView ({ document }: { document: Document }) {
     void fetch()
   })
 
-  const title = useComputed(() => content.value.find(p => p.startsWith('# ')))
+  const title = useComputed(() =>
+    capitalizeFirstLetter(content.value
+      .find((p) => p.startsWith('# '))
+      ?.replace('# ', '') ?? ''
+    )
+  )
   const paragraphs = useComputed(() => {
     content.value.shift()
     return content.value

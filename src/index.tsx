@@ -22,7 +22,7 @@ function AppContent () {
 export function App () {
   return (
     <LocationProvider>
-      <div className='bg-light-2'>
+      <div className='bg-light-2 subpixel-antialiased'>
         <EarthstarProvider>
           <StoreProvider>
             <div class='m-auto h-full max-w-[90ch] min-h-screen w-full scroll-smooth rounded-md'>

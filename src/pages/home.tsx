@@ -19,12 +19,12 @@ const NavBar = () => {
     console.debug('new path', generatedPath)
     await store.createDocument({
       path: generatedPath,
-      content: '# title\ndescription...'
+      content: '# title\nLorem ipsum dolor sit amet, consectetur adipisicing elit. Temporibus, quisquam iusto rerum inventore nihil assumenda placeat similique quo, eaque distinctio excepturi consequatur deserunt nulla, provident incidunt vero fugit rem! Odio!'
     })
   }
 
   return (
-    <nav class='sticky left-0 top-0 flex flex-row items-center justify-between bg-light-2 bg-opacity-30 py-1 text-black backdrop-blur-md backdrop-filter'>
+    <nav class='sticky left-0 top-0 h-[3rem] flex flex-row items-center justify-between bg-light-2 bg-opacity-30 px-7 py-2 text-black backdrop-blur-md backdrop-filter'>
       <div class='flex gap-2'>
         <button
           type='button' className='cursor-pointer b-none bg-transparent text-black'
@@ -32,12 +32,12 @@ const NavBar = () => {
         >
           <PlusIcon />
         </button>
-        <SearchIcon />
+        <SearchIcon className='cursor-not-allowed' />
       </div>
       <h1 class='text-xl font-bold'>Lovely</h1>
       <div class='flex flex-row items-center gap-2'>
         <Avatar name={earthstar?.identity.value?.name ?? ''} />
-        <MenuIcon />
+        <MenuIcon className='cursor-not-allowed' />
       </div>
     </nav>
   )
