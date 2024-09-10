@@ -12,8 +12,8 @@ importers:
         specifier: ^2.1.0
         version: 2.1.0
       '@earthstar/earthstar':
-        specifier: npm:@jsr/earthstar__earthstar@11.0.0-beta.5
-        version: '@jsr/earthstar__earthstar@11.0.0-beta.5'
+        specifier: npm:@jsr/earthstar__earthstar@11.0.0-beta.7
+        version: '@jsr/earthstar__earthstar@11.0.0-beta.7'
       '@preact/signals':
         specifier: ^1.3.0
         version: 1.3.0(preact@10.22.1)
@@ -619,8 +619,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
 
-  '@jsr/earthstar__earthstar@11.0.0-beta.5':
-    resolution: {integrity: sha512-8GdrEygZ5O6+HKAemBOURwqC9kqomi5BsJh0dMqN8uZnh0fUc12yOvmKLjCPaTWiMdllOvxGNMwoewK632dZcA==, tarball: https://npm.jsr.io/~/11/@jsr/earthstar__earthstar/11.0.0-beta.5.tgz}
+  '@jsr/earthstar__earthstar@11.0.0-beta.7':
+    resolution: {integrity: sha512-1A6ee+82/PbAtm4i+CWVmxDhLJQie1HqG7/LBqnNxbfoJz/jXgv/FakmA6ZmPEUsJN1yrVnqDakYK34ITuYY1Q==, tarball: https://npm.jsr.io/~/11/@jsr/earthstar__earthstar/11.0.0-beta.7.tgz}
 
   '@jsr/earthstar__meadowcap@0.6.4':
     resolution: {integrity: sha512-OiZQUVnu2cIbnfC2o5KbJypmt0Yti3ZYlMOmG1x/QRSl5bPYAKxbXEXI7dnSiDfXhZrXQOXK6nceNW9AejzM1Q==, tarball: https://npm.jsr.io/~/11/@jsr/earthstar__meadowcap/0.6.4.tgz}
@@ -628,8 +628,8 @@ packages:
   '@jsr/earthstar__willow-utils@2.0.1':
     resolution: {integrity: sha512-Y6mBYqvynEImu+VeIzLOS3YT/fvpxDshiRWbmifjp0SZcrnB2UOVzPDqKjiiinjrXw7aakp75WMlZMcALOOkjw==, tarball: https://npm.jsr.io/~/11/@jsr/earthstar__willow-utils/2.0.1.tgz}
 
-  '@jsr/earthstar__willow@0.5.3':
-    resolution: {integrity: sha512-zi+BePBr6PiRNsW/Qqxo0UZ3BCecgFKe9+6OiZPNmxKChn4y8nrH/JMIodjyz8eUjWUYADbHyHJaWKzJuAuT/Q==, tarball: https://npm.jsr.io/~/11/@jsr/earthstar__willow/0.5.3.tgz}
+  '@jsr/earthstar__willow@0.6.1':
+    resolution: {integrity: sha512-SkdEcTze84RHm1K3HFceyTeMzPpA+zz7SP5xfUlHYiOo7XzywqOf89FW/ivuga6+RMUNjAYn++ucqH2ryG3bAA==, tarball: https://npm.jsr.io/~/11/@jsr/earthstar__willow/0.6.1.tgz}
 
   '@jsr/korkje__fifo@0.2.4':
     resolution: {integrity: sha512-iJXMd7G3uQbnhb66Fj7YorUTYu+KmBLS71iGuTXJn8vncGwqcKXEHCf+4vQV7rJGCV1xXQIZNJ0NSrS3eVSyQw==, tarball: https://npm.jsr.io/~/11/@jsr/korkje__fifo/0.2.4.tgz}
@@ -3777,10 +3777,10 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
 
-  '@jsr/earthstar__earthstar@11.0.0-beta.5':
+  '@jsr/earthstar__earthstar@11.0.0-beta.7':
     dependencies:
       '@jsr/earthstar__meadowcap': 0.6.4
-      '@jsr/earthstar__willow': 0.5.3
+      '@jsr/earthstar__willow': 0.6.1
       '@jsr/earthstar__willow-utils': 2.0.1
       '@jsr/noble__ed25519': 2.1.0
       '@jsr/std__bytes': 0.224.0
@@ -3800,7 +3800,7 @@ snapshots:
     dependencies:
       '@jsr/std__bytes': 0.224.0
 
-  '@jsr/earthstar__willow@0.5.3':
+  '@jsr/earthstar__willow@0.6.1':
     dependencies:
       '@jsr/earthstar__willow-utils': 2.0.1
       '@jsr/korkje__fifo': 0.2.4
