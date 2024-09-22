@@ -1,12 +1,19 @@
 @font-face {
-  font-family: 'PT Serif';
-  src: url('../public/fonts/PTSerif-Regular.ttf') format('truetype');
+  font-family: 'Lora';
+  src: url('../public/fonts/Lora-Variable.woff2') format('woff2');
   font-weight: normal;
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'Lora';
+  src: url('../public/fonts/Lora-Variable-Italic.woff2') format('woff2');
+  font-weight: normal;
+  font-style: italic;
+}
+
 :root {
-  font-family: var(--font-neogrotesque);
+  font-family: var(--font-neogrotesque) var(--font-emoji);
   line-height: 1.5;
   font-weight: 400;
 
@@ -49,4 +56,3 @@ body:has(dialog[open]) {
   border-style: solid;
   border-color: white transparent transparent transparent;
 }
-

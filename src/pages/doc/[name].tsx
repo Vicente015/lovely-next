@@ -52,7 +52,7 @@ function DocumentView ({ document }: { document: Document }) {
         <h1 class='line-clamp-2 mb-4 text-pretty text-3xl text-neutral-950 font-bold font-antique' autoFocus contentEditable>
           {title}
         </h1>
-        <div className='text-balance font-transitional' contentEditable>
+        <div className='font-lora text-balance' contentEditable>
           {paragraphs.map((paragraph, index) => (
             <TextSection key={index}>
               {paragraph}
