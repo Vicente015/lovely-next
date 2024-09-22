@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 import preact from '@preact/preset-vite'
 import unocss from 'unocss/vite'
+import compression from 'vite-plugin-compression'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -8,10 +9,11 @@ export default defineConfig({
     unocss(),
     preact({
       prerender: {
-        enabled: true,
+        enabled: false,
         renderTarget: '#app',
         additionalPrerenderRoutes: ['/404']
       }
-    })
+    }),
+    compression({ algorithm: 'brotliCompress', verbose: true })
   ]
 })

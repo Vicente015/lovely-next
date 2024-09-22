@@ -25,7 +25,7 @@ export function App () {
       <div className='bg-light-2 subpixel-antialiased'>
         <EarthstarProvider>
           <StoreProvider>
-            <div class='m-auto h-full max-w-[90ch] min-h-screen w-full scroll-smooth rounded-md'>
+            <div class='m-auto h-full max-w-[90ch] min-h-screen w-full scroll-smooth rounded-md pb-1'>
               <AppContent />
             </div>
           </StoreProvider>

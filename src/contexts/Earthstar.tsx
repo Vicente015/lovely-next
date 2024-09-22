@@ -10,7 +10,7 @@ import { useContext } from 'preact/hooks'
 import { type ComponentChildren, createContext } from 'preact'
 
 export interface EarthstarState {
-  identity: Signal<IdentitiesTable | null>
+  identity: Signal<IdentitiesTable | null | false>
   share: Signal<SharesTable | null>
   peer: Signal<Peer | null>
   createIdentity: (shortname: string) => Promise<IdentitiesTable>
@@ -25,7 +25,7 @@ export function EarthstarProvider (
 ) {
   const keyring = useContext(KeyringContext)
   const peer = useSignal<Peer | null>(null)
-  const identity = useSignal<IdentitiesTable | null>(null)
+  const identity = useSignal<IdentitiesTable | null | false>(null)
   const share = useSignal<SharesTable | null>(null)
 
   console.debug('earthstar initialized')
@@ -85,6 +85,7 @@ export function EarthstarProvider (
       identity.value.tag
     )
     const cap = await peer.value.mintCap(newShare.tag, identity.value.tag, 'write')
+
     if (isErr(cap)) throw cap
     share.value = newShare
     return newShare
@@ -105,7 +106,10 @@ export function EarthstarProvider (
       console.debug('loaded peer', keyringPeer)
 
       const keyringIdentity = (await keyring.identities.toArray()).at(0)
-      if (!keyringIdentity) return
+      if (!keyringIdentity) {
+        identity.value = false
+        return
+      }
       await addExistingIdentity(keyringIdentity)
       console.debug('loaded identity', identity.value)
 
